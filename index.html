@@ -180,6 +180,7 @@ label,.lbl{font-weight:600;font-size:15px}
 input,select,textarea{width:100%;background:var(--coal);color:var(--cream);border:1px solid var(--ash);border-radius:10px;padding:12px 14px;font:16px var(--body);min-height:48px}
 textarea{min-height:110px;resize:vertical}
 input:focus,select:focus,textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(217,169,74,.25)}
+.venue-yes,.venue-no{display:grid;gap:16px}
 .field.bad input,.field.bad select{border-color:var(--err)}
 .field .msg{color:var(--err);font-size:14px;min-height:0}
 .hint{font-size:14px;color:var(--gold-soft);background:rgba(217,169,74,.1);border:1px solid rgba(217,169,74,.35);border-radius:10px;padding:10px 12px}
@@ -198,6 +199,30 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--gold);bo
 .status{font-size:14px;color:var(--smoke)}
 .status.ok{color:var(--ok)}
 @media (max-width:900px){.book-grid{grid-template-columns:1fr}.book-side{position:static}}
+
+
+/* venues */
+.venues{background:var(--ember);border-block:1px solid var(--ash)}
+.partner{display:grid;grid-template-columns:auto 1fr auto;gap:18px 24px;align-items:center;background:var(--oxblood);border:2px solid var(--gold);border-radius:18px;padding:22px 24px;margin-bottom:32px}
+.partner .badge{font:700 12px var(--body);letter-spacing:.16em;text-transform:uppercase;color:var(--coal);background:var(--gold);border-radius:999px;padding:6px 12px;white-space:nowrap}
+.partner h3{font-size:26px}
+.partner p{color:var(--gold-soft);font-size:15px;margin-top:4px}
+.partner .btns{display:flex;flex-wrap:wrap;gap:10px}
+.partner .btn-line{border-color:rgba(246,238,227,.4)}
+@media (max-width:760px){.partner{grid-template-columns:1fr}}
+.vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.vcard{background:var(--coal);border:1px solid var(--ash);border-radius:14px;padding:20px;display:grid;gap:10px;align-content:start;min-width:0}
+.vcard h3{font-size:20px}
+.vcard .where{margin:0;font-size:14px;color:var(--gold);font-weight:600;letter-spacing:.02em}
+.vcard p{color:var(--smoke);font-size:15px}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tags span{font-size:13px;font-weight:600;border:1px solid var(--ash);border-radius:999px;padding:3px 10px;color:var(--cream)}
+.tags .ok{border-color:rgba(111,191,115,.5);color:var(--ok)}
+.tags .ask{border-color:rgba(217,169,74,.5);color:var(--gold-soft)}
+.vcard .acts{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;margin-top:4px}
+.vcard .acts a{font-weight:600;font-size:15px}
+.vcard .acts button{background:none;border:0;padding:0;color:var(--gold-soft);font:600 15px var(--body);text-decoration:underline;cursor:pointer}
+.vnote{margin-top:24px;color:var(--smoke);font-size:14px;max-width:80ch}
 
 /* footer */
 footer{border-top:1px solid var(--ash);padding-block:36px calc(36px + env(safe-area-inset-bottom,0px))}
@@ -224,6 +249,7 @@ footer .script{font-size:22px}
       <a href="#occasions">Occasions</a>
       <a href="#menus">Menus</a>
       <a href="#gallery">Gallery</a>
+      <a href="#venues">Venues</a>
       <a class="btn btn-red" href="#book">Book now</a>
     </nav>
   </div>
@@ -390,6 +416,35 @@ footer .script{font-size:22px}
   </div>
 </section>
 
+<section class="band venues" id="venues">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Need a venue?</p>
+      <h2>Venues across London that welcome us</h2>
+      <p class="lede">No venue yet? Start with our partner venue, or browse halls and gardens across London that let you bring your own caterer. Tell us which one you like when you book and we will help you plan it.</p>
+    </div>
+
+    <div class="partner">
+      <span class="badge">Partner venue</span>
+      <div><h3>Manners Lounge</h3><p>A venue we work with directly. Ask us about dates and packages when you book.</p></div>
+      <div class="btns">
+        <a class="btn btn-gold" href="https://www.mannerslounge.co.uk/" target="_blank" rel="noopener">Website</a>
+        <a class="btn btn-line" href="https://www.instagram.com/manners.lounge" target="_blank" rel="noopener">Instagram</a>
+        <a class="btn btn-line" href="#book" data-venue="Manners Lounge (partner venue)">Book with this venue</a>
+      </div>
+    </div>
+
+    <div class="tabs" role="tablist" aria-label="Venue areas" id="vtabs">
+      <button class="tab" role="tab" aria-selected="true" data-area="North">North London</button>
+      <button class="tab" role="tab" aria-selected="false" data-area="East">East London</button>
+      <button class="tab" role="tab" aria-selected="false" data-area="South">South London</button>
+      <button class="tab" role="tab" aria-selected="false" data-area="West">West London</button>
+    </div>
+    <div class="vgrid" id="vgrid" role="tabpanel" aria-live="polite"></div>
+    <p class="vnote">These venues are independent and are not run by Mr Butcher, apart from our partner venue. Each one sets its own prices, availability and rules. They all allowed outside caterers when we checked in October 2026, but please confirm with the venue before booking, and ask whether outdoor grilling is allowed. We are happy to make that call for you.</p>
+  </div>
+</section>
+
 <section class="band book" id="book">
   <div class="wrap book-grid">
     <aside class="book-side">
@@ -439,16 +494,57 @@ footer .script{font-size:22px}
             <div class="field"><label for="f-guests">Number of guests</label><input id="f-guests" name="guests" type="number" min="10" max="2000" inputmode="numeric" placeholder="e.g. 60" required><span class="msg"></span></div>
           </div>
           <p class="hint" id="bigGroup" hidden>Great, groups of 50 or more get our special group menus. We will go through the options when we call.</p>
-          <div class="row">
-            <div class="field"><label for="f-postcode">Venue postcode</label><input id="f-postcode" name="postcode" autocomplete="postal-code" placeholder="e.g. EN1 1AA" required><span class="msg"></span></div>
-            <div class="field"><span class="lbl" id="l-setting">Indoor or outdoor</span>
-              <div class="chips" role="radiogroup" aria-labelledby="l-setting">
-                <label class="chip"><input type="radio" name="setting" id="s-out" value="Outdoor (garden)" checked><span>Outdoor</span></label>
-                <label class="chip"><input type="radio" name="setting" id="s-in" value="Indoor (home or hall)"><span>Indoor</span></label>
-                <label class="chip"><input type="radio" name="setting" id="s-unsure" value="Not sure yet"><span>Not sure</span></label>
-              </div></div>
+          <div class="field"><span class="lbl" id="l-hasvenue">Do you have a venue?</span>
+            <div class="chips" role="radiogroup" aria-labelledby="l-hasvenue">
+              <label class="chip"><input type="radio" name="hasvenue" id="hv-yes" value="yes" checked><span>Yes, I have a venue</span></label>
+              <label class="chip"><input type="radio" name="hasvenue" id="hv-no" value="no"><span>No, help me find one</span></label>
+            </div></div>
+
+          <div class="venue-yes" id="venueYes">
+            <div class="row">
+              <div class="field"><label for="f-postcode">Venue postcode</label><input id="f-postcode" name="postcode" autocomplete="postal-code" placeholder="e.g. EN1 1AA"><span class="msg"></span></div>
+              <div class="field"><span class="lbl" id="l-setting">Indoor or outdoor</span>
+                <div class="chips" role="radiogroup" aria-labelledby="l-setting">
+                  <label class="chip"><input type="radio" name="setting" id="s-out" value="Outdoor (garden)" checked><span>Outdoor</span></label>
+                  <label class="chip"><input type="radio" name="setting" id="s-in" value="Indoor (home or hall)"><span>Indoor</span></label>
+                  <label class="chip"><input type="radio" name="setting" id="s-unsure" value="Not sure yet"><span>Not sure</span></label>
+                </div></div>
+            </div>
+            <div class="field"><label for="f-venue">Venue address or name <span class="opt">(optional)</span></label><input id="f-venue" name="venue" autocomplete="street-address"></div>
           </div>
-          <div class="field"><label for="f-venue">Venue address or name <span class="opt">(optional)</span></label><input id="f-venue" name="venue" autocomplete="street-address"></div>
+
+          <div class="venue-no" id="venueNo" hidden>
+            <div class="field"><label for="f-vlike">A venue you liked <span class="opt">(optional)</span></label><input id="f-vlike" name="vlike" placeholder="e.g. Manners Lounge"></div>
+            <p class="hint">No problem. Tell us what you are looking for and we will suggest venues that suit your party and let us cook on site. You can also browse <a href="#venues">popular venues</a> for ideas.</p>
+            <div class="row">
+              <div class="field"><label for="f-area">Preferred area</label>
+                <select id="f-area" name="area">
+                  <option value="">Choose one</option>
+                  <option>North London</option><option>East London</option><option>South London</option><option>West London</option><option>Central London</option><option>Anywhere in London</option>
+                </select><span class="msg"></span></div>
+              <div class="field"><label for="f-vtype">Kind of venue</label>
+                <select id="f-vtype" name="vtype">
+                  <option value="">Choose one</option>
+                  <option>Garden or outdoor space</option><option>Indoor hall</option><option>Indoor hall with outdoor area</option><option>Marquee</option><option>Not sure, suggest something</option>
+                </select><span class="msg"></span></div>
+            </div>
+            <div class="field"><span class="lbl" id="l-needs">Must-haves <span class="opt">(tick any)</span></span>
+              <div class="chips" role="group" aria-labelledby="l-needs">
+                <label class="chip"><input type="checkbox" name="needs" id="n-access" value="Step-free access"><span>Step-free access</span></label>
+                <label class="chip"><input type="checkbox" name="needs" id="n-park" value="Parking"><span>Parking</span></label>
+                <label class="chip"><input type="checkbox" name="needs" id="n-kids" value="Space for children"><span>Space for children</span></label>
+                <label class="chip"><input type="checkbox" name="needs" id="n-transport" value="Near public transport"><span>Near public transport</span></label>
+                <label class="chip"><input type="checkbox" name="needs" id="n-late" value="Can run late"><span>Can run late</span></label>
+              </div></div>
+            <div class="row">
+              <div class="field"><label for="f-vbudget">Budget for venue hire <span class="opt">(optional)</span></label>
+                <select id="f-vbudget" name="vbudget">
+                  <option value="">Not sure yet</option>
+                  <option>Under £500</option><option>£500 to £1,000</option><option>£1,000 to £2,500</option><option>Over £2,500</option>
+                </select></div>
+              <div class="field"><label for="f-home">Your postcode <span class="opt">(optional, helps us suggest nearby venues)</span></label><input id="f-home" name="home" autocomplete="postal-code" placeholder="e.g. N9 0AA"></div>
+            </div>
+          </div>
         </fieldset>
 
         <fieldset>
@@ -514,7 +610,7 @@ const WEB3FORMS_KEY = "67d8332e-d275-4f53-be7c-62228b252698";
 const $ = s => document.querySelector(s);
 
 // Menu tabs
-const tabs = [...document.querySelectorAll('.tab')];
+const tabs = [...document.querySelectorAll('.menus .tab')];
 function showTab(t){
   tabs.forEach(x=>{const on=x===t;x.setAttribute('aria-selected',on);x.tabIndex=on?0:-1;document.getElementById(x.getAttribute('aria-controls')).hidden=!on;});
 }
@@ -555,6 +651,11 @@ const todayISO=(()=>{const d=new Date();d.setMinutes(d.getMinutes()-d.getTimezon
 dateIn.min=todayISO;
 guests.addEventListener('input',()=>{$('#bigGroup').hidden=!(+guests.value>=50);});
 
+function hasVenue(){return $('#hv-yes').checked;}
+document.querySelectorAll('input[name="hasvenue"]').forEach(r=>r.addEventListener('change',()=>{
+  $('#venueYes').hidden=!hasVenue();$('#venueNo').hidden=hasVenue();
+  form.querySelectorAll('.field.bad').forEach(f=>{f.classList.remove('bad');f.querySelector('.msg').textContent='';});
+}));
 function setErr(el,msg){const f=el.closest('.field');f.classList.toggle('bad',!!msg);f.querySelector('.msg').textContent=msg||'';}
 function validate(){
   let first=null;
@@ -568,7 +669,12 @@ function validate(){
   chk(dateIn,!!dateIn.value&&dateIn.value>=todayISO,dateIn.value?'Please choose a date from today onwards.':'Please choose your event date.');
   const g=+guests.value;
   chk(guests,g>=10&&g<=2000,'Please enter roughly how many guests (10 or more).');
-  chk($('#f-postcode'),$('#f-postcode').value.trim().length>=2,'Please enter the venue postcode so we can check the area.');
+  if(hasVenue()){
+    chk($('#f-postcode'),$('#f-postcode').value.trim().length>=2,'Please enter the venue postcode so we can check the area.');
+  }else{
+    chk($('#f-area'),!!$('#f-area').value,'Please choose the area you would like the venue in.');
+    chk($('#f-vtype'),!!$('#f-vtype').value,'Please choose the kind of venue you want.');
+  }
   return first;
 }
 form.addEventListener('input',e=>{if(e.target.closest('.field.bad'))validate();});
@@ -578,6 +684,7 @@ function buildSummary(){
   const v=id=>$(id).value.trim();
   const menus=[...document.querySelectorAll('input[name="menus"]:checked')].map(c=>c.value);
   const setting=(document.querySelector('input[name="setting"]:checked')||{}).value||'';
+  const needs=[...document.querySelectorAll('input[name="needs"]:checked')].map(c=>c.value);
   const lines=[
     'NEW CATERING BOOKING REQUEST',
     '',
@@ -588,9 +695,19 @@ function buildSummary(){
     'Occasion: '+v('#f-type'),
     'Date: '+fmtDate(v('#f-date'))+(v('#f-time')?' at '+v('#f-time'):''),
     'Guests: '+v('#f-guests')+(+v('#f-guests')>=50?' (50+ special menu)':''),
-    'Setting: '+setting,
-    'Postcode: '+v('#f-postcode').toUpperCase(),
-    v('#f-venue')?'Venue: '+v('#f-venue'):null,
+    ...(hasVenue()?[
+      'Setting: '+setting,
+      'Postcode: '+v('#f-postcode').toUpperCase(),
+      v('#f-venue')?'Venue: '+v('#f-venue'):null
+    ]:[
+      'Venue: NEEDS HELP FINDING ONE',
+      v('#f-vlike')?'Venue they liked: '+v('#f-vlike'):null,
+      'Preferred area: '+v('#f-area'),
+      'Kind of venue: '+v('#f-vtype'),
+      needs.length?'Must-haves: '+needs.join(', '):null,
+      v('#f-vbudget')?'Venue budget: '+v('#f-vbudget'):null,
+      v('#f-home')?'Client postcode: '+v('#f-home').toUpperCase():null
+    ]),
     'Menus: '+(menus.length?menus.join(', '):'Not chosen yet'),
     v('#f-notes')?'Notes: '+v('#f-notes'):null
   ].filter(x=>x!==null);
@@ -611,7 +728,7 @@ form.addEventListener('submit',async e=>{
     st.textContent='Sending your request...';
     try{
       const r=await fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},
-        body:JSON.stringify({access_key:WEB3FORMS_KEY,subject:'Catering request: '+$('#f-type').value+' on '+$('#f-date').value,from_name:'Mr Butcher website',replyto:$('#f-email').value||undefined,message:text})});
+        body:JSON.stringify({access_key:WEB3FORMS_KEY,subject:'Catering request: '+$('#f-type').value+' on '+$('#f-date').value+(hasVenue()?'':' (needs a venue)'),from_name:'Mr Butcher website',replyto:$('#f-email').value||undefined,message:text})});
       const j=await r.json();
       if(j.success){st.textContent='Request sent. We will call you back shortly. You can also send it on WhatsApp for a faster reply.';st.classList.add('ok');}
       else throw new Error();
@@ -625,6 +742,58 @@ $('#copyBtn').addEventListener('click',()=>{
   const sel=()=>{const r=document.createRange();r.selectNodeContents($('#summary'));const s=getSelection();s.removeAllRanges();s.addRange(r);};
   try{navigator.clipboard.writeText(t).then(()=>{b.lastChild.textContent='Copied';},()=>{sel();b.lastChild.textContent='Selected, now copy';});}
   catch(err){sel();}
+});
+
+// Venues
+const VENUES={
+ North:[
+  ["Forty Hall","Forty Hill, Enfield · EN2 9HA","Both","Up to 100","A 17th-century manor with a Long Gallery and inner courtyard. Professional outside caterers are welcome once approved by the venue.","https://www.fortyhallestate.co.uk/private-hire",true,true],
+  ["Capel Manor Gardens","Bullsmoor Lane, Enfield · EN1 4RQ","Both","Up to 70","Historic gardens with a manor house room, popular for birthdays and baby showers. You can arrange food through an outside caterer.","https://www.capelmanorgardens.co.uk/venue-hire/celebrations-and-special-occasions/",true,true],
+  ["Kempe Hall","Kempe Road, Enfield · EN1 4QS","Both","Up to 96","A council community hall with its own outside area and kitchen. Hirers bring their own caterer.","https://www.enfield.gov.uk/services/leisure-and-culture/community-halls/kempe-hall",true,true],
+  ["Memorial Hall","Maldon Road, Edmonton · N9 9QP","Indoor","Up to 180","A large council hall with a stage and kitchen, good for henna nights and engagement parties. Hirers bring their own caterer.","https://www.enfield.gov.uk/services/leisure-and-culture/community-halls/memorial-hall",true,true],
+  ["Green Towers Community Centre","Plevna Road, Edmonton Green · N9 0BU","Indoor","Up to 150","A fully wheelchair-accessible centre with a large hall for receptions and social functions, open until 11pm.","https://www.enfield.gov.uk/services/leisure-and-culture/community-halls/green-towers-community-centre",true,true]
+ ],
+ East:[
+  ["Valentines Mansion & Gardens","Valentines Park, Ilford · IG1 4XA","Both","Up to 120","A Georgian mansion with period rooms beside walled gardens, used for baby showers and birthdays. Outside caterers are welcome.","https://valentinesmansion.com/contact/",true,null],
+  ["Crown Banqueting Suite","Cranbrook Road, Ilford · IG1 4LX","Indoor","Up to 300","A large banqueting hall for birthdays, baby showers and cultural celebrations, with dry hire and your own caterer allowed.","https://www.crownbanquetingsuite.com/booking",true,null],
+  ["Lakeside Suite, Fairlop Waters","Fairlop Waters Country Park · IG6 3HN","Both","Up to 120","A function suite with a private bar and a large balcony over the lake. Outside caterers are welcome.","https://visionrcl.org.uk/venues/lakeside-suite-at-fairlop-waters/",true,null],
+  ["Foxburrows Barn","Hainault Forest · IG7 4QN","Both","Up to 70","An open-plan barn in Hainault Forest country park, used for birthday parties. Outside caterers are welcome.","https://visionrcl.org.uk/venues/foxburrows-barn-at-hainault-forest/",true,null],
+  ["Sutton House & Breaker's Yard","Homerton, Hackney · E9 6JQ","Both","Up to 120","A National Trust Tudor house with a step-free barn and a garden. It is hired dry, so you choose the caterer.","https://www.nationaltrust.org.uk/visit/london/sutton-house-and-breakers-yard/venue-hire-at-sutton-house-and-breakers-yard",true,true]
+ ],
+ South:[
+  ["Oakley House","Bromley Common · BR2 8HA","Both","Up to 320","A big banqueting suite set in gardens, with parking for about 200 cars. Outside caterers are allowed.","https://www.oakleyhouse.co.uk/catering",true,null],
+  ["Brockwell Hall","Brockwell Park, Herne Hill · SE24 9BJ","Both","Up to 200","A Georgian hall in Brockwell Park with a conservatory suite opening onto a private courtyard. Hired dry, with full wheelchair access.","https://hire.lambeth.gov.uk/venues/369-brockwell-hall",false,true],
+  ["Brockwell Park Community Greenhouses","Brockwell Park · SE24 9BN","Outdoor","Up to 150","A community garden with a barn, greenhouse and decking for relaxed evening parties. Bring your own caterer; open fires are not allowed.","https://www.brockwellgreenhouses.org.uk/site-hire-at-bpcg/",true,null],
+  ["Vestry Hall","Cricket Green, Mitcham · CR4 3UD","Indoor","Up to 150","A council-run Victorian hall with two halls, a stage, a bar and a kitchen, and step-free access. The council says you can bring your own caterer.","https://www.merton.gov.uk/leisure-recreation-and-culture/hallhire/vestry-hall",true,true],
+  ["Stanley Arts","South Norwood Hill · SE25 6AB","Both","Up to 400","A listed arts venue with a grand hall, smaller rooms and an outdoor yard for parties of 30 to 400.","https://stanleyarts.org/venue-hire/",false,null]
+ ],
+ West:[
+  ["The Great Barn, Manor Farm","Pinn Way, Ruislip · HA4 7QL","Both","Up to 200","A medieval barn in 22 acres. Professional caterers can run a barbecue in the gravel courtyard.","https://pre.hillingdon.gov.uk/ceremony-venues/ceremonies-great-barn",true,true],
+  ["The Great Barn, Headstone Manor","Pinner View, Harrow · HA2 6PX","Both","Up to 200","A 16th-century barn hired exclusively with its own lawn. The venue considers caterers you choose; gas and electric cooking only.","https://greatbarnvenue.uk/contact-us",true,true],
+  ["Elliott Hall, Harrow Arts Centre","Uxbridge Road, Hatch End · HA5 4EA","Indoor","Up to 180","A listed hall with a vaulted ceiling and stained glass, seating 180 at banquet tables. Outside caterers are welcome.","https://harrowarts.com/hire",true,true],
+  ["Sands End Arts & Community Centre","Peterborough Road, Fulham · SW6 3EZ","Both","Up to 200","A modern community centre beside South Park with a main hall, kitchens and a courtyard.","https://www.lbhf.gov.uk/arts-and-parks/sands-end-arts-and-community-centre",false,null],
+  ["Winston Churchill Hall","Manor Farm site, Ruislip · HA4 7QL","Indoor","Up to 210","A hall with a large kitchen and a lounge bar, listed by the council for parties.","https://www.hillingdon.gov.uk/article/13083/Winston-Churchill-Theatre-and-Hall",false,null]
+ ]
+};
+const AREA_NAME={North:'North London',East:'East London',South:'South London',West:'West London'};
+const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function renderVenues(area){
+  $('#vgrid').innerHTML=VENUES[area].map(([n,w,t,c,d,u,cat,acc])=>`<article class="vcard">
+    <h3>${esc(n)}</h3><p class="where">${esc(w)}</p>
+    <div class="tags"><span>${t==='Both'?'Indoor &amp; outdoor':t}</span><span>${esc(c)} guests</span>${cat?'<span class="ok">Own caterer allowed</span>':'<span class="ask">Ask about caterers</span>'}${acc?'<span class="ok">Step-free</span>':''}</div>
+    <p>${esc(d)}</p>
+    <div class="acts"><a href="${u}" target="_blank" rel="noopener">Venue website</a><button type="button" data-venue="${esc(n)}" data-area="${area}">Plan my party here</button></div>
+  </article>`).join('');
+}
+const vtabs=[...document.querySelectorAll('#vtabs .tab')];
+vtabs.forEach(t=>t.addEventListener('click',()=>{vtabs.forEach(x=>x.setAttribute('aria-selected',x===t));renderVenues(t.dataset.area);}));
+renderVenues('North');
+document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-venue]');if(!b)return;
+  $('#hv-no').checked=true;$('#hv-no').dispatchEvent(new Event('change'));
+  $('#f-vlike').value=b.dataset.venue;
+  if(b.dataset.area)$('#f-area').value=AREA_NAME[b.dataset.area];
+  if(b.tagName==='BUTTON'){$('#book').scrollIntoView({behavior:'smooth'});}
 });
 </script>
 
