@@ -87,7 +87,7 @@ p{margin:0}
 .phone-big{margin-top:22px;font-family:var(--display);font-size:clamp(26px,3.4vw,34px);letter-spacing:.02em;color:var(--cream);user-select:all}
 .phone-big span{display:block;font-family:var(--body);font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--smoke);font-weight:700}
 .hero-photo{position:relative;justify-self:end;width:min(100%,460px)}
-.hero-photo img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:220px 220px 18px 18px;border:3px solid var(--gold)}
+.hero-photo video{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:220px 220px 18px 18px;border:3px solid var(--gold);background:var(--ember)}
 .halal{position:absolute;left:-18px;bottom:28px;width:112px;height:112px;border-radius:50%;background:var(--oxblood);border:3px solid var(--gold);display:grid;place-content:center;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,.45);transform:rotate(-8deg)}
 .halal .ar{font-size:30px;line-height:1;color:var(--gold-soft);font-family:"Amiri","Noto Naskh Arabic","Geeza Pro",serif}
 .halal .en{font:700 13px/1.2 var(--body);letter-spacing:.18em;color:var(--cream);margin-top:4px}
@@ -98,8 +98,13 @@ p{margin:0}
 .facts span{font-size:14px;color:var(--smoke)}
 @media (max-width:860px){
   .hero .wrap{grid-template-columns:1fr}
-  .hero-photo{justify-self:center;width:min(100%,380px)}
-  .halal{left:0;width:96px;height:96px}
+  .hero-photo{grid-area:1/1;position:relative;width:auto;justify-self:stretch;align-self:stretch;z-index:0;margin:-40px calc(-1 * var(--gutter-r)) -40px calc(-1 * var(--gutter-l))}
+  .hero .wrap>div:first-child{grid-area:1/1}
+  .hero-photo video{position:absolute;inset:0;height:100%;aspect-ratio:auto;border:0;border-radius:0;opacity:.42}
+  .hero-photo::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(23,17,15,.55) 0%,rgba(23,17,15,.35) 40%,var(--coal) 100%)}
+  .hero .wrap>div:first-child{position:relative;z-index:1}
+  .halal{left:auto;right:var(--gutter-r);top:auto;bottom:28px;width:76px;height:76px;z-index:2}
+  .halal .ar{font-size:22px}.halal .en{font-size:11px}
   .facts{grid-template-columns:1fr 1fr}
   .facts div:nth-child(2){border-right:0}
   .facts div:nth-child(-n+2){border-bottom:1px solid var(--ash)}
@@ -149,6 +154,12 @@ p{margin:0}
 
 /* gallery */
 .gallery{columns:4 220px;column-gap:12px}
+@media (max-width:600px){.gallery{columns:2;column-gap:8px}.gallery button{margin-bottom:8px}.gallery figcaption{font-size:12px}.gallery .play::after{width:36px;height:36px;background-size:20px}}
+@media (max-width:760px){
+  .steps{gap:18px}
+  .steps li{grid-template-columns:auto 1fr;column-gap:16px;row-gap:4px;padding-top:16px}
+  .steps li::before{grid-row:span 2;font-size:36px;width:1.1ch;text-align:center}
+}
 .gallery button{all:unset;display:block;break-inside:avoid;margin-bottom:12px;border-radius:12px;overflow:hidden;cursor:zoom-in;position:relative;width:100%}
 .gallery button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
 .gallery img{width:100%;transition:transform .3s ease}
@@ -222,6 +233,13 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--gold);bo
 .vcard .acts{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;margin-top:4px}
 .vcard .acts a{font-weight:600;font-size:15px}
 .vcard .acts button{background:none;border:0;padding:0;color:var(--gold-soft);font:600 15px var(--body);text-decoration:underline;cursor:pointer}
+@media (max-width:600px){
+  .vgrid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;margin-inline:calc(-1 * max(16px,env(safe-area-inset-left,0px)));padding-inline:max(16px,env(safe-area-inset-left,0px));padding-bottom:8px;scrollbar-width:none}
+  .vgrid::-webkit-scrollbar{display:none}
+  .vcard{flex:0 0 84%;scroll-snap-align:start}
+  .vswipe{display:block!important}
+}
+.vswipe{display:none;color:var(--smoke);font-size:13px;margin:-6px 0 10px}
 .vnote{margin-top:24px;color:var(--smoke);font-size:14px;max-width:80ch}
 
 /* footer */
@@ -230,8 +248,27 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px 
 footer .script{font-size:22px}
 .wa-float{position:fixed;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:40;width:58px;height:58px;border-radius:50%;background:#25d366;display:grid;place-items:center;box-shadow:0 8px 24px rgba(0,0,0,.4)}
 .wa-float svg{width:30px;height:30px}
+.mbar{display:none}
+@media (max-width:760px){
+  .wa-float{display:none}
+  .mbar{display:grid;grid-template-columns:1fr 1fr 1.3fr;gap:8px;position:fixed;left:0;right:0;bottom:0;z-index:45;padding:10px max(12px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px));background:color-mix(in srgb,var(--coal) 94%,transparent);backdrop-filter:blur(8px);border-top:1px solid var(--ash)}
+  .mbar a{display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;border-radius:999px;border:1px solid var(--ash);color:var(--cream);text-decoration:none;font-weight:700;font-size:15px}
+  .mbar a svg{width:18px;height:18px}
+  .mbar a.q{background:var(--gold);border-color:var(--gold);color:var(--coal)}
+  body{padding-bottom:calc(72px + env(safe-area-inset-bottom,0px))}
+}
 </style>
 <link rel="icon" href="img/logo.jpg">
+<link rel="canonical" href="https://mrbutchercatering.com/">
+<meta name="theme-color" content="#17110f">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Mr Butcher Kebap Catering">
+<meta property="og:title" content="Mr Butcher Kebap Catering · Halal döner &amp; grill catering in London">
+<meta property="og:description" content="Fresh döner and charcoal grill cooked at your party. Birthdays, baby showers, engagements and henna nights across Enfield and all London. Call 07715 412585.">
+<meta property="og:url" content="https://mrbutchercatering.com/">
+<meta property="og:image" content="https://mrbutchercatering.com/img/chef-platter.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FoodEstablishment","name":"Mr Butcher Kebap Catering","url":"https://mrbutchercatering.com/","telephone":"+447715412585","image":"https://mrbutchercatering.com/img/chef-platter.jpg","logo":"https://mrbutchercatering.com/img/logo.jpg","servesCuisine":["Turkish","Halal","Kebab","Grill"],"areaServed":[{"@type":"City","name":"London"},{"@type":"AdministrativeArea","name":"Enfield"}],"description":"Halal döner and charcoal grill catering cooked on site for birthdays, baby showers, engagements, henna nights and private events across London."}</script>
 </head>
 <body>
 
@@ -262,15 +299,15 @@ footer .script{font-size:22px}
       <p class="eyebrow">Halal catering · Enfield &amp; all London</p>
       <h1 style="margin-top:14px">Fresh döner and charcoal grill, <em>cooked at your party</em></h1>
       <p class="script tag">You stay in one place, we go everywhere</p>
-      <p class="lede">Mr Butcher brings the döner stand, the charcoal grill and the whole spread to your home, garden or hall. Birthdays, baby showers, engagements, henna nights and every family celebration in between.</p>
+      <p class="lede">We bring the döner stand, the charcoal grill and the whole spread to your home, garden or hall, and cook everything fresh in front of your guests.</p>
       <div class="cta-row">
-        <a class="btn btn-gold" href="#book">Request a booking</a>
+        <a class="btn btn-gold" href="#book">Get a free quote</a>
         <a class="btn btn-line" href="https://wa.me/447715412585" target="_blank" rel="noopener"><svg><use href="#i-wa"/></svg>WhatsApp us</a>
       </div>
       <p class="phone-big"><span>Call or text</span>07715 412585</p>
     </div>
     <div class="hero-photo">
-      <img src="img/chef-platter.jpg" alt="A large platter of chicken shish, lamb shish, wings and halloumi skewers served at a garden party">
+      <video id="heroVid" src="video/hero.mp4" poster="video/hero.jpg" autoplay muted loop playsinline preload="auto" aria-label="Lamb and chicken shish cooking on our charcoal grill"></video>
       <div class="halal" aria-label="Halal food"><span class="ar">حلال</span><span class="en">HALAL</span></div>
     </div>
   </div>
@@ -440,6 +477,7 @@ footer .script{font-size:22px}
       <button class="tab" role="tab" aria-selected="false" data-area="South">South London</button>
       <button class="tab" role="tab" aria-selected="false" data-area="West">West London</button>
     </div>
+    <p class="vswipe">Swipe to see more venues</p>
     <div class="vgrid" id="vgrid" role="tabpanel" aria-live="polite"></div>
     <p class="vnote">These venues are independent and are not run by Mr Butcher, apart from our partner venue. Each one sets its own prices, availability and rules. They all allowed outside caterers when we checked in October 2026, but please confirm with the venue before booking, and ask whether outdoor grilling is allowed. We are happy to make that call for you.</p>
   </div>
@@ -561,7 +599,7 @@ footer .script{font-size:22px}
         </fieldset>
 
         <div class="submit-row">
-          <button class="btn btn-gold" type="submit">Send booking request</button>
+          <button class="btn btn-gold" type="submit">Get my free quote</button>
           <p>We will call you back to confirm. Nothing is booked or charged until you agree the menu and price.</p>
         </div>
       </form>
@@ -590,6 +628,11 @@ footer .script{font-size:22px}
   </div>
 </footer>
 
+<nav class="mbar" aria-label="Quick contact">
+  <a href="tel:+447715412585"><svg><use href="#i-phone"/></svg>Call</a>
+  <a href="https://wa.me/447715412585" target="_blank" rel="noopener"><svg><use href="#i-wa"/></svg>WhatsApp</a>
+  <a class="q" href="#book">Get a quote</a>
+</nav>
 <a class="wa-float" href="https://wa.me/447715412585" target="_blank" rel="noopener" aria-label="Chat on WhatsApp" style="color:#fff"><svg><use href="#i-wa"/></svg></a>
 
 <div class="lightbox" id="lb" hidden role="dialog" aria-modal="true" aria-label="Photo viewer">
@@ -795,6 +838,9 @@ document.addEventListener('click',e=>{
   if(b.dataset.area)$('#f-area').value=AREA_NAME[b.dataset.area];
   if(b.tagName==='BUTTON'){$('#book').scrollIntoView({behavior:'smooth'});}
 });
+
+// Hero video: respect reduced motion
+try{const hv=$('#heroVid');if(hv&&matchMedia('(prefers-reduced-motion: reduce)').matches){hv.removeAttribute('autoplay');hv.pause();}}catch(e){}
 </script>
 
 </body>
