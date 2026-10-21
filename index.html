@@ -242,6 +242,12 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--gold);bo
 .vswipe{display:none;color:var(--smoke);font-size:13px;margin:-6px 0 10px}
 .vnote{margin-top:24px;color:var(--smoke);font-size:14px;max-width:80ch}
 
+.allergy{margin-top:28px;color:var(--smoke);font-size:15px;max-width:70ch}
+.allergy b{color:var(--cream)}
+.privacy{flex:1 1 100%;margin-top:24px;color:var(--smoke);font-size:14px;border-top:1px solid var(--ash);padding-top:16px}
+.privacy summary{cursor:pointer;font-weight:600;color:var(--cream)}
+.privacy div{display:grid;gap:8px;margin-top:12px;max-width:75ch}
+.privacy b{color:var(--cream)}
 /* footer */
 footer{border-top:1px solid var(--ash);padding-block:36px calc(36px + env(safe-area-inset-bottom,0px))}
 footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px 32px;color:var(--smoke);font-size:15px}
@@ -410,6 +416,7 @@ footer .script{font-size:22px}
       </div>
     </div>
 
+    <p class="allergy"><b>Allergies or dietary needs?</b> We can tell you which of the 14 major allergens are in every dish. Just ask when we call, or note them in your booking request.</p>
     <div class="printed">
       <button type="button" data-lb="img/menu-flyer.jpg" aria-label="Open the printed menu"><img src="img/menu-flyer.jpg" alt="" loading="lazy"></button>
       <button type="button" data-lb="img/flyer-tr.jpg" aria-label="Open the Turkish flyer"><img src="img/flyer-tr.jpg" alt="" loading="lazy" style="width:150px"></button>
@@ -600,7 +607,7 @@ footer .script{font-size:22px}
 
         <div class="submit-row">
           <button class="btn btn-gold" type="submit">Get my free quote</button>
-          <p>We will call you back to confirm. Nothing is booked or charged until you agree the menu and price.</p>
+          <p>We will call you back to confirm. Nothing is booked or charged until you agree the menu and price. We only use your details to arrange your event; see our <a href="#privacy">privacy notice</a>.</p>
         </div>
       </form>
 
@@ -625,6 +632,19 @@ footer .script{font-size:22px}
   <div class="wrap">
     <div><b style="font-family:var(--display);font-weight:400;font-size:20px;color:var(--cream)">Mr Butcher Kebap Catering</b><br>Halal döner, grill &amp; kebab catering · Enfield and all London</div>
     <div><span class="script">Siz bir yerde, biz her yerde</span><br>Call or WhatsApp <b style="color:var(--cream);user-select:all">07715 412585</b></div>
+  </div>
+  <div class="wrap">
+    <details class="privacy" id="privacy">
+      <summary>Privacy notice</summary>
+      <div>
+        <p><b>Who we are.</b> Mr Butcher Kebap Catering, Enfield, London. Contact: 07715 412585.</p>
+        <p><b>What we collect.</b> When you send a booking request we receive the details you type in: your name, phone number, email (if given), event date, guest numbers, venue or venue preferences, menu choices and notes.</p>
+        <p><b>Why.</b> Only to reply to your request, give you a quote and arrange your event. We never sell your details or send marketing without asking.</p>
+        <p><b>How it reaches us.</b> Your request is sent to us by email through Web3Forms, and by WhatsApp if you choose to send it there.</p>
+        <p><b>How long we keep it.</b> Until your event is finished and any payment is settled, then we delete it unless you ask us to keep it for a future booking.</p>
+        <p><b>Your rights.</b> You can ask us to see, correct or delete your details at any time by calling or messaging 07715 412585. You can also complain to the Information Commissioner's Office at ico.org.uk.</p>
+      </div>
+    </details>
   </div>
 </footer>
 
@@ -841,6 +861,11 @@ document.addEventListener('click',e=>{
 
 // Hero video: respect reduced motion
 try{const hv=$('#heroVid');if(hv&&matchMedia('(prefers-reduced-motion: reduce)').matches){hv.removeAttribute('autoplay');hv.pause();}}catch(e){}
+
+// Open the privacy notice when linked to
+function openPrivacy(){if(location.hash==='#privacy'){$('#privacy').open=true;}}
+addEventListener('hashchange',openPrivacy);openPrivacy();
+document.querySelectorAll('a[href="#privacy"]').forEach(a=>a.addEventListener('click',()=>{$('#privacy').open=true;}));
 </script>
 
 </body>
